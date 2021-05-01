@@ -2,31 +2,20 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
-
 use App\Http\Controllers\Controller;
-use App\Http\Traits\ApiResponseStatus;
-use App\Repositories\UserRepositoryInterface;
+use App\Http\Services\Auth\EmailVerificationService;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class EmailVerificationController extends Controller
 {
-    use ApiResponseStatus;
 
-
-    public function __construct(private UserRepositoryInterface $userRepository)
+    public function __construct(private EmailVerificationService $emailVerificationService, private EmailVerificationRequest $emailVerificationRequest)
     {
         
     }
 
-    public function action($userId)
+    public function __invoke()
     {
-        $user = $this->userRepository->find($userId);
-
-        if (!$user->hasVerifiedEmail()) {
-            $user->markEmailAsVerified();
-            return $this->JsonResponseSuccess('email has been verified', 200);
-        }
-
-        return $this->JsonResponseError('bad request', 400);
+        return $this->emailVerificationService->action($this->emailVerificationRequest);
     }
 }

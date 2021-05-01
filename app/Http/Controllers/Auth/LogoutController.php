@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Traits\ApiResponseStatus;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Services\Auth\LogoutService;
 
 class LogoutController extends Controller
 {
-    use ApiResponseStatus;
-
-    public function action()
+    public function __construct(private LogoutService $logoutService)
     {
-        if (Auth::user()->currentAccessToken()->delete()) {
-            return $this->JsonResponseSuccess('token deleted successfully', 200);
-        } 
         
+    }
+
+    public function __invoke()
+    {
+        return $this->logoutService->action();
     }
 }

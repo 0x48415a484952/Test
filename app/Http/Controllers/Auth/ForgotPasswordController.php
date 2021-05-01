@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\ForgotPasswordRequest;
-use App\Http\Traits\ApiResponseStatus;
-use Illuminate\Support\Facades\Password;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Services\Auth\ForgotPasswordService;
 
 class ForgotPasswordController extends Controller
 {
-    use ApiResponseStatus;
-
-    public function action(ForgotPasswordRequest $request)
+    public function __construct(private ForgotPasswordService $forgotPasswordService, private LoginRequest $loginRequest)
     {
-        $validatedData = $request->validated();
-        Password::sendResetLink($validatedData);
-        return $this->JsonResponseSuccess('Reset password link sent to your email address.');
+        
+    }
+
+    public function __invoke()
+    {
+        return $this->forgotPasswordService->action($this->loginRequest);
     }
 }

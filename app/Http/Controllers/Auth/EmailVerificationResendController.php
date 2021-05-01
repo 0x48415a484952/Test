@@ -3,21 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Traits\ApiResponseStatus;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Services\Auth\EmailVerificationResendService;
 
 class EmailVerificationResendController extends Controller
 {
-    use ApiResponseStatus;
-
-    public function action()
+    public function __construct(private EmailVerificationResendService $emailVerificationResendService)
     {
+        
+    }
 
-        if (Auth::user()->hasVerifiedEmail()) {
-            return $this->JsonResponseError('email has been already verified', 400);
-
-        }
-
-        Auth::user()->sendEmailVerificationNotification();
+    public function __invoke()
+    {
+        return $this->emailVerificationResendService->action();
     }
 }
