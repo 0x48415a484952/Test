@@ -14,16 +14,10 @@ class EmailVerificationResendController extends Controller
     {
 
         if (Auth::user()->hasVerifiedEmail()) {
-            $this->JsonResponseError('email has been already verified', 400);
+            return $this->JsonResponseError('email has been already verified', 400);
 
         }
 
         Auth::user()->sendEmailVerificationNotification();
-        return $this->JsonResponseSuccess('new email has been sent , please check your inbox', 200);
-        // return response()->json([
-        //     'message' => [
-        //         'success' => 'new email has been sent , please check your inbox'
-        //     ]
-        // ]);
     }
 }

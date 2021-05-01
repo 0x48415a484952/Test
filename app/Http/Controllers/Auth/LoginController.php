@@ -6,16 +6,22 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Validation\ValidationException;
 use App\Http\Resources\User\PrivateUserResource;
 
 class LoginController extends Controller
 {
+    public function __construct(private UserRepositoryInterface $userRepository)
+    {
+        
+    }
+
     public function action(LoginRequest $loginRequest)
     {
-        $loginRequest->validated();
+        $validated = $loginRequest->validated();
         $device_name = $loginRequest->device_name;
-        $user = User::where('email', $loginRequest->email)->first();
+        $user = $this->userRepository->where('email', $validated['email'])->first();
 
         if (! $user || ! Hash::check($loginRequest->password, $user->password)) {
             throw ValidationException::withMessages([
