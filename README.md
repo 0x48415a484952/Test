@@ -41,7 +41,7 @@ change .env contents to your needs
 ## Using Postman To Test The API
 
 ```
-you can import [https://github.com/AhmadzadehHazhir/test/blob/main/test-task.postman_collection.json](test-task.postman_collection.json) file into postman and check the routes
+you can import [test-task.postman_collection.json](https://github.com/AhmadzadehHazhir/test/blob/main/test-task.postman_collection.json) file into postman and check the routes
 be aware some routes need authentication
 ```
 
