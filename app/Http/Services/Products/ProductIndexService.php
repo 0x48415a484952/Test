@@ -13,6 +13,6 @@ class ProductIndexService
     }
     public function action()
     {
-        return $this->product->all()->paginate(12);
+        return $this->product->all();
     }
 }

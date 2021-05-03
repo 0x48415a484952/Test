@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Auth;
 
+use App\Models\User;
 use App\Http\Traits\ApiResponseStatus;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -12,7 +13,12 @@ class RegisterService
 {
     use ApiResponseStatus;
     
-    public function __construct(private UserRepositoryInterface $userRepository)
+    // public function __construct(private UserRepositoryInterface $userRepository)
+    // {
+        
+    // }
+
+    public function __construct(private User $userRepository)
     {
         
     }

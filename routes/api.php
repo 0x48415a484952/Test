@@ -2,18 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-
 Route::group(['prefix' => '/auth', 'namespace' => 'App\Http\Controllers\Auth'], function() {
     Route::post('/register', RegisterController::class);
     Route::post('/login', LoginController::class)->middleware('guest');
@@ -23,4 +11,16 @@ Route::group(['prefix' => '/auth', 'namespace' => 'App\Http\Controllers\Auth'], 
     Route::get('/me', MeController::class)->middleware(['auth:sanctum', 'verified']);
     Route::post('/forgot-password',ForgotPasswordController::class)->middleware('guest')->name('password.email');
     Route::post('/reset-password', ResetPasswordController::class)->middleware('guest')->name('password.reset');
+});
+
+Route::group(['namespace' => 'App\Http\Controllers\Products'], function() {
+    Route::get('/products', ProductIndexController::class);
+    Route::post('/products', ProductStoreController::class);
+});
+
+Route::group(['namespace' => 'App\Http\Controllers\Cart', 'middleware' => 'auth:sanctum'], function() {
+    //this route accepts json
+    Route::post('/cart', CartStoreController::class);
+    Route::put('/cart/{id}', CartUpdateController::class);
+    Route::delete('/cart/{id}', CartDestroyController::class);
 });

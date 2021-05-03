@@ -15,20 +15,19 @@ class ForgotPasswordService
         
     }
 
-    public function action(LoginRequest $loginRequest)
+    public function action(LoginRequest $request)
     {
-        $validated = $loginRequest->validated();
-        $device_name = $loginRequest->device_name;
-        $user = $this->userRepository->where('email', $validated['email'])->first();
+        $device_name = $request->device_name;
+        $user = $this->userRepository->where('email', $request->email)->first();
 
-        if (! $user || ! Hash::check($loginRequest->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.']
             ]);
         }
 
         if ($device_name === null) {
-            $device_name = $loginRequest->server('HTTP_USER_AGENT').'/'.$loginRequest->ip();
+            $device_name = $request->server('HTTP_USER_AGENT').'/'.$request->ip();
         }
 
         $token = $user->createToken($device_name)->plainTextToken;

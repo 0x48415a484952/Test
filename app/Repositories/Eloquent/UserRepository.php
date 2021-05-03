@@ -17,12 +17,22 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     protected $model;
 
     /**
-     * BaseRepository constructor.
+     * UserRepository constructor.
      *
-     * @param Model $model
+     * @param User $user
      */
-    public function __construct(User $model)
+    public function __construct(user $model)
     {
         $this->model = $model;
+    }
+
+
+    /**
+     * UserRepository cart()
+     *
+     */
+    public function cart()
+    {
+        return $this->model->cart();
     }
 }

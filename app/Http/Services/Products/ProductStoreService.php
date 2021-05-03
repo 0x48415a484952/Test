@@ -19,7 +19,7 @@ class ProductStoreService
             'slug' => $request->slug,
             'description' => $request->description,
             'price' => $request->price,
-            'special_price_rule' => $request->specialPriceRule
+            'special_price_rule' => $request->special_price_rule
         ]);
         return $product;
     }

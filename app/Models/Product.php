@@ -24,7 +24,7 @@ class Product extends Model
 
     public function stockCount()
     {
-        return $this->stock->sum('pivot.stock');
+        // return $this->stock->sum('pivot.stock');
     }
 
     public function stocks()

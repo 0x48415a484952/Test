@@ -13,11 +13,12 @@ use Illuminate\Database\Eloquent\Builder;
 */
 class BaseRepository implements EloquentRepositoryInterface
 {
+
+
     /**  
      * @var Model
      */     
-    protected $model;       
-
+    protected $model;  
     /**      
      * BaseRepository constructor.      
      *      
@@ -27,6 +28,14 @@ class BaseRepository implements EloquentRepositoryInterface
     {         
         $this->model = $model;
     }
+
+    public function __call($method, $arguments)
+    {
+        return call_user_func_array([$this->model, $method], $arguments);
+    } 
+     
+
+
 
     /**
      * @param array $columns
@@ -95,4 +104,11 @@ class BaseRepository implements EloquentRepositoryInterface
         return $this->model->select($columns)->where($compared, $comparable);
     }
 
+    public function refresh()
+    {
+        $this->model->refresh();
+    }
+
+
+  
 }

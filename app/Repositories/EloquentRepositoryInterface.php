@@ -13,6 +13,11 @@ use Illuminate\Database\Eloquent\Collection;
 interface EloquentRepositoryInterface
 {
 
+    public function __call($method, $arguments); 
+
+
+
+
     /**
      * Get all models.
      *
@@ -31,7 +36,8 @@ interface EloquentRepositoryInterface
     public function create(array $attributes): Model;
 
     /**
-     * Update existing model.
+     * Update 
+     * existing model.
      *
      * @param int $id
      * @param array $attributes
@@ -65,5 +71,7 @@ interface EloquentRepositoryInterface
      * @return Builder
      */
     public function where($compared, $comparable, array $columns = ['*']): ?Builder;
+
+    public function refresh();
 
 }

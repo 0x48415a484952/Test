@@ -2,24 +2,35 @@
 
 namespace App\Http\Services\Cart;
 
-use App\Http\Services\Money\Money;
+use App\Http\Services\SpecialPriceCalculator\SpecialFixedPriceCalculator;
 
 class Cart
 {
-    protected $user;
-
-    protected $changed = false;
-
+    //referencing the authenticated user
+    private $user;
     public function __construct($user)
     {
         $this->user = $user;
     }
 
+
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    //returns a collection of products in the user_cart table related to the authenticated user
     public function products()
     {
         return $this->user->cart;
     }
 
+    public function refreshUserCart()
+    {
+        return $this->user->cart()->refresh();
+    }
+
+    //add products to cart_user table
     public function add($products)
     {
         $this->user->cart()->syncWithoutDetaching(
@@ -27,6 +38,7 @@ class Cart
         );
     } 
 
+    //update(reduce) quantity of the user_cart
     public function update($productId, $quantity)
     {
         $this->user->cart()->updateExistingPivot($productId, [
@@ -34,49 +46,10 @@ class Cart
         ]);
     } 
 
+    //remove product from user_cart
     public function delete($productId)
     {
         $this->user->cart()->detach($productId);
-    }
-
-    public function sync()
-    {
-        $this->user->cart->each(function($product) {
-            $quantity = $product->minStock($product->pivot->quantity);
-
-            if ($quantity != $product->pivot->quantity) {
-                $this->changed = true;
-            }
-            
-            $product->pivot->update([
-                'quantity' => $quantity
-            ]);
-        });
-
-    }
-
-    public function hasChanged()
-    {
-        return $this->changed;
-    }
-
-    public function empty()
-    {
-        $this->user->cart()->detach();
-    }
-
-    public function isEmpty()
-    {
-        return $this->user->cart->sum('pivot.quantity') <= 0;
-    }
-
-    public function subtotal()
-    {
-        $subtotal = $this->user->cart->sum(function ($product) {
-            return $product->price->amount() * $product->pivot->quantity;
-        });
-
-        return new Money($subtotal);
     }
 
     protected function getStorePayload($products) 
@@ -94,5 +67,12 @@ class Cart
             return $product->pivot->quantity;
         }
         return 0;
+    }
+
+    public function subtotal()
+    {
+        $userCart = $this->products();
+        $priceCalculator = new SpecialFixedPriceCalculator();
+        return $priceCalculator->calculate($this->user->cart()->with('products.special_price_rule'), $userCart);
     }
 }

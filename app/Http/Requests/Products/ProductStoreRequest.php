@@ -26,9 +26,9 @@ class ProductStoreRequest extends FormRequest
         return [
             'title' => 'required | string',
             'slug' => 'required | string',
-            'description' =>'string',
+            'description' =>'string | nullable',
             'price' => 'required | numeric',
-            'special_price_rule' => 'json'
+            'special_price_rule' => 'json | nullable'
         ];
     }
 }

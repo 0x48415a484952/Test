@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -176,8 +177,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //Ide Helper Provider
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+        App\Providers\RepositoryServiceProvider::class
     ],
 
     /*
