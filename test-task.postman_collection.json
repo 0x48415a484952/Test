@@ -1,0 +1,616 @@
+{
+	"info": {
+		"_postman_id": "6755fbbc-f1c4-4fad-adb0-689e546b6b69",
+		"name": "test-task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/auth/register?email=hazhir23@mailhog.com&password=aaaaaaaaaaA98+&password_confirmation=aaaaaaaaaaA98+",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "hazhir23@mailhog.com"
+								},
+								{
+									"key": "password",
+									"value": "aaaaaaaaaaA98+"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "aaaaaaaaaaA98+"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email verification",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/email/verify/7?expires=1619705488&hash=83e0b4c7ae25a06140c7378dcb611b1607d4d5f8&signature=92c5c1e14da28c963dbb7a7b29d8e35cda4a1aee4ca8fbf787cd47430b8ce183",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"email",
+								"verify",
+								"7"
+							],
+							"query": [
+								{
+									"key": "expires",
+									"value": "1619705488"
+								},
+								{
+									"key": "hash",
+									"value": "83e0b4c7ae25a06140c7378dcb611b1607d4d5f8"
+								},
+								{
+									"key": "signature",
+									"value": "92c5c1e14da28c963dbb7a7b29d8e35cda4a1aee4ca8fbf787cd47430b8ce183"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email verification resend",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/email/resend/",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"email",
+								"resend",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "8|3zcb4fmg8bvp9fv4pREttPtQ2vPT6cO5o9qDNkYM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/forgotpassword/",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"forgotpassword",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "8|3zcb4fmg8bvp9fv4pREttPtQ2vPT6cO5o9qDNkYM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost/api/auth/reset-password?token=79a12d7326d046617d57bc4b5514392e2bcdafe7aa8e4e19d164ff24f2174e83&email=hazhir@mailhog.com&password=aaaaaaaaaaA98+&password_confirmation=aaaaaaaaaaA98+",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "79a12d7326d046617d57bc4b5514392e2bcdafe7aa8e4e19d164ff24f2174e83"
+								},
+								{
+									"key": "email",
+									"value": "hazhir@mailhog.com"
+								},
+								{
+									"key": "password",
+									"value": "aaaaaaaaaaA98+"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "aaaaaaaaaaA98+"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/auth/login?email=hazhir23@mailhog.com&password=aaaaaaaaaaA98+",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "hazhir23@mailhog.com"
+								},
+								{
+									"key": "password",
+									"value": "aaaaaaaaaaA98+"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|TDmrTcDCEKjoulNQElWIoL9Xg98v5W1WWIBmyzRX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/me",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"me"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "4|CXoYHVcl4dZyTUY26YjhY8vyo2JgL994cKaORVkG",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/auth/logout",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/products",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "products",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/products?title=new product 3&slug=some-slug-99&price=100&special_price_rule={ \"3\":130, \"9\":600, \"7\": 450 }",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "new product 3"
+								},
+								{
+									"key": "slug",
+									"value": "some-slug-99"
+								},
+								{
+									"key": "price",
+									"value": "100"
+								},
+								{
+									"key": "special_price_rule",
+									"value": "{ \"3\":130, \"9\":600, \"7\": 450 }"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Add Products To Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|amuUWFdkGCFZqGDt1dFBROUZ5lrjfnphF6LjMpr5",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"products\": [\n\t\t{ \"id\": 2, \"quantity\": 1 },\n        { \"id\": 1, \"quantity\": 3}\n\t]\n}"
+						},
+						"url": {
+							"raw": "localhost/api/cart",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cart"
+							],
+							"query": [
+								{
+									"key": "products",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "products.id",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Quantity Of The Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|amuUWFdkGCFZqGDt1dFBROUZ5lrjfnphF6LjMpr5",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/cart/1?quantity=5",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cart",
+								"1"
+							],
+							"query": [
+								{
+									"key": "quantity",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove A Product Completely From The Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|amuUWFdkGCFZqGDt1dFBROUZ5lrjfnphF6LjMpr5",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/cart/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cart",
+								"1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|amuUWFdkGCFZqGDt1dFBROUZ5lrjfnphF6LjMpr5",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/api/cart/",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cart",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
