@@ -25,11 +25,6 @@ class Cart
         return $this->user->cart;
     }
 
-    public function refreshUserCart()
-    {
-        return $this->user->cart()->refresh();
-    }
-
     //add products to cart_user table
     public function add($products)
     {
@@ -38,7 +33,7 @@ class Cart
         );
     } 
 
-    //update(reduce) quantity of the user_cart
+    //update(reduce) quantity of a specific product in user cart
     public function update($productId, $quantity)
     {
         $this->user->cart()->updateExistingPivot($productId, [
@@ -46,7 +41,7 @@ class Cart
         ]);
     } 
 
-    //remove product from user_cart
+    //completely remove a product from user cart
     public function delete($productId)
     {
         $this->user->cart()->detach($productId);

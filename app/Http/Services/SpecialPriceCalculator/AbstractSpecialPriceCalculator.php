@@ -17,13 +17,13 @@ abstract class AbstractSpecialPriceCalculator  implements SpecialPriceCalculator
     }
 
 
-    public function calculate(string $rules, $cart)
+    public function calculate($products)
     {
         if ($this->next) {
-            $this->next->calculate($rules, $cart);
+            $this->next->calculate($products);
         }
 
-        return $cart;
+        return $products;
     }
     
 }

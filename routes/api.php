@@ -19,8 +19,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Products'], function() {
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Cart', 'middleware' => 'auth:sanctum'], function() {
-    //this route accepts json
-    Route::post('/cart', CartStoreController::class);
+    
+    Route::get('/cart', CartIndexController::class);
+    Route::post('/cart', CartStoreController::class);//this route accepts json
     Route::put('/cart/{id}', CartUpdateController::class);
     Route::delete('/cart/{id}', CartDestroyController::class);
 });

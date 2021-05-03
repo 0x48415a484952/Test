@@ -2,43 +2,86 @@
 
 namespace App\Http\Services\SpecialPriceCalculator;
 
-use App\Http\Services\Cart\Cart;
 
 class SpecialFixedPriceCalculator extends AbstractSpecialPriceCalculator
 {
-    public function calculate(string $rules, $cart)
+    public function calculate($products)
     {
-        $decodedRules = json_decode($rules);
-        krsort($decodedRules);
+        // array:2 [
+                //     8 => 350
+                //     3 => 130
+                //   ]
 
-        foreach ($cart as $key => $item) {
+
+                //$item[$key] = // array:7 [
+                //     "id" => 2
+                //     "title" => "new product 2"
+                //     "slug" => "some-slug-9"
+                //     "description" => null
+                //     "special_price_rule" => "{"3": 130, "8": 350}"
+                //     "user_id" => 1
+                //     "quantity" => 42
+                //   ]
+
+        $products = json_decode($products,true);
+        $item = $products['products'];
+        
+        foreach ($item as $key => $value) {
+            
+            $counter = 0;
+            $total = 0;
+            $decodedRules = json_decode($item[$key]['special_price_rule'], true);
+            
+            krsort($decodedRules);
+            $remainder = $item[$key]['quantity'];
             foreach ($decodedRules as $quantity => $specialPrice) {
 
-                if ( (($item['quantity'] % $quantity) !== 0) 
-                    && $item['quantity'] > $quantity 
+                if ( ( ($remainder % $quantity) !== 0) 
+                    && $remainder > $quantity 
                     && is_int($specialPrice) ) {
 
-                    $quotient = intval($item['quantity'] / $quantity);
-                    $cart[$key]['total'] += $quotient * $specialPrice;
+                    $quotient = intval($remainder / $quantity);
+
+                    $total += $quotient * $specialPrice;
+                    $remainder = intval($remainder % $quantity);
+                    var_dump($total);
+                    // continue;
                 }
 
+                
 
-                if ( (($item['quantity'] % $quantity) === 0) 
-                    && $item['quantity'] >= $quantity 
-                    && is_int($specialPrice) ) {
+                if (count($decodedRules) - 1 === $counter 
+                && $remainder < $quantity
+                && is_int($specialPrice) ) {
 
-                    $cart[$key]['total'] += ($item['quantity'] / $quantity ) * $specialPrice;
-                    break;
+                    $total += $remainder * $item[$key]['price'];
+                    var_dump($total);
+                    // continue;
                 } 
+                if ( (($remainder % $quantity) === 0) 
+                    && $remainder >= $quantity 
+                    && is_int($specialPrice) ) {
 
-
-                if (is_int($specialPrice)) {
-                    $item['quantity'] = $item['quantity'] % $quantity;
+                    $total += ($remainder / $quantity ) * $specialPrice;
+                    $remainder = intval($remainder % $quantity);
+                    // var_dump($total);
+                    
                 } else {
-                    return parent::calculate($rules, $cart);
-                }
+                    return parent::calculate($products);
+                } 
+                $counter++; 
+                var_dump($total);
+                
+                
             }
+            // $item[$key]['total'] = $total;
+            // dd($total);
+            
         }
+        
+        
+        // dd($item[0]['total'], $item[1]['total']);
+        
         
     }
 }
