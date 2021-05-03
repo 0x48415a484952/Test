@@ -107,13 +107,14 @@ Used Bunch of Auth::user() but i think those can be refactored int the future.
     
 
 ## Running Tests
+
 ```
 ./vendor/bin/sail artisan test 
-
+```
 at the moment there are only LoginTest And RegistrationTest But plan to go for 80% coverage of the application
 
 did not use any factories but we can do that also
-```
+
 
 
 ## Special Thanks 
