@@ -1,62 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About This Test Task
 
-## About Laravel
+This is a shopping cart which each product can have multiple price, for example the base price for product A is 50$ but if you buy 3 of them they cost 130$ and even we can have multiple discount just on different numbers for one Product as shown below:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Buy 1 Of A : 50$
+Buy 3 of A : 130$
+Buy 8 of A : 400$
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+and extend this to have multiple products like A,B,C which each user can add to their cart.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+i extended the example to have a syntax in the future that we can implement multiple parser that can understand it.
 
-## Learning Laravel
+we could use a greedy algorithm for calculating the total price of the cart i preferred a bottom up approach and handling a json is more fun and like to keep things simple this way we also made are queries much less with one query we get all the price combination also we can extend this part to make it more fun and make a parser alongside the CoR to have a discount as follows -> if you buy product A with 2 of Product B you will get Product C for Free this also can be implemented in this approach which i had in mind. sure we need to implement some other helper classed to achieve such complexity but we don't need to change any classed(Open Close Principle), also each class only has one Responsibility at the moment because the parser was simple i did not try to decouple the SpecialPriceCalculator class but that is something which needs to be considered.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## What Have Been Used
+Php 8.0.3
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Laravel 8
 
-## Laravel Sponsors
+MySql 8
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+MailHog
 
-### Premium Partners
+Meilisearch -> did not use it just installed it out of curiosity 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+Laravel Sanctum as the Authentication Layer
 
-## Contributing
+## What To Be Aware OF
+Add a layer of Repository to the basic Laravel eloquent which it was new for me to use laravel in such way ,
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Add Services Directory which all the logic of the app has been handled in there and we have a very thin layer of Controllers
 
-## Code of Conduct
+The Database Consists of 3 Tables {usres, user_cart, products} and the default tables of laravel sanctum such as {personal_access_tokens, password_resets}
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The Structre of the app is as follows:
+app-->
+    Http--->
+        Controllers--->
+
+            -Auth(consistis of our authentication layer which is laravel sanctum)
+
+            -Cart(all controllers that handle each route related to cart like adding products be aware one of the routes accepts Json Route::Post)
+
+            -Products
+
+        Requests--> All The Requests Have Validations no invalidated requests almost
+
+        Services--> a fancy name which says our logic stands here
+            -Auth
+            -Cart
+            -Money(was going to implement a money class that also makes out system future proof so we can manage to extend the website to work with different currencies of the world ) DID NOT USE IT FOR THE MEAN TIME
+            -SpecialPriceCalculator (implemented with a mind of CoR maybe need some refactoring but it has been monkey tested so far)
+
+        Traits--> consists of some helper traits
+
+
+        Models--> consists the relations of the objects
+
+        Provider--> created RepositoryServiceProvider in here if you don't want to use a Repository you may need to disable it and remove all the references to those inside Services classes
+
+        Repositories--> contain repositories which they are leveraging Laravel Eloquent
+
+        used argon2id as the hashing algorithm for the users
+
+        routes--> api.php includes all the routes which are grouped in 3 different aspects {authentication routes, products route, cart routes}
+
+        All the controllers are single action which are called by their class name i tried to be consistent so all the methods are named action but the classes are very understandable.
+
+        Rules-->wrote a StrongPassword Rule To be Added on top of registeration validation
+
+## For Future Development
+
+Write Unit Test For All Classes specially cart
+already wrote some Feature Test on the Authentication Part (i did not use any boilerplate) just using sanctum to handle token generation which was fun but maybe Oauth2 makes sense more in an API 
+Used Bunch of Auth::user() but i think those can be refactored int the future.
+    
+
+## Running Tests
+
+./vendor/bin/sail artisan test 
+
+at the moment there are only LoginTest And RegistrationTest But plan to go for 80% coverage of the application
+
+did not use any factories but we can do that also
+
+## Installing 
+
+everything is Dockerized out of the box thanks to laravel-sail just run:
+
+git clone https://github.com/AhmadzadehHazhir/test
+
+cd test 
+
+./vendor/bin/sail up
+
+## Special Thanks 
+
+To those who work in Devolon and The team who came up with such a good test i had fun to be honest.
+I have to admit i learned a lot about different patterns during this test task , thanks to those who trusted me and gave me a chance to learn. implemented a CoR pattern on the special_price_rule which i think made it a little bit future proof as i mentioned before. i could have gone with something like a decorator but it did not seem to be very helpful. even strategy could have been applied wanted to keep it simple i used CoR because it can be extended easily in this situation also if one Calculator/Parser couldn't handle a specific syntax for our special_prices we can easily add another class to the chain.
+
+
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+You Probably wanna to go with php 8.0.5 because 8.0.3 has some security vulnaribilities 
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The This is an open-sourced software licensed under the [MIT license]

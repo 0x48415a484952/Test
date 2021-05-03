@@ -16,13 +16,10 @@ class CartIndexService
 
     public function action()
     {
-        
         $user = Auth::user();
         $this->cart->setUser($user);
         $priceCalculator = new SpecialFixedPriceCalculator();
         $productsInCart = (new CartResource($user));
-        
-        $cart = $priceCalculator->calculate($productsInCart->toJson());
-        // dd($cart);
+        return $priceCalculator->calculate($productsInCart->toJson());
     }
 }
