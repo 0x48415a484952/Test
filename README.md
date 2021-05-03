@@ -6,14 +6,14 @@ This is a shopping cart which each product can have multiple price, for example 
 
 <table>
 <th>Product A</th>
+<th>price</th>
 <tr><td>1</td><td>50$</td></tr>
 <tr>><td>3</td><td>130$</td></tr>
 <tr><td>8</td><td>400$</td></tr>
 </table>
 
 and extend this to have multiple products like A,B,C which each user can add to their cart.
-
-i extended the example to have a syntax for this pricing,  in the future that we can implement multiple parser that can understand it.
+i extended the example to have a syntax for this pricing,  in the future that we can implement multiple parser that can understand different types of discounts by using a json field in products table we also can have discount on one product for example we have product A with base price of 50$ then we could say 1:30 which we then parse it and if such syntax is detected we show the user a discount for basePrice so the logic of this implementation seems to be future proof.
 we could use a greedy algorithm for calculating the total price of the cart i preferred a bottom up approach and handling a json is more fun and like to keep things simple this way we also made our queries much less , with one query we get all the price combination also we can extend this part to make it more fun and make a parser alongside the CoR to have a discount as follows -> if you buy product A with 2 of Product B you will get Product C for Free this also can be implemented in this approach which i had in mind. sure we need to implement some other helper classed to achieve such complexity but we don't need to change any classed(Open Close Principle), also each class only has one Responsibility at the moment because the parser was simple i did not try to decouple the SpecialPriceCalculator class but that is something which needs to be considered.
 
 ## Installing 
@@ -25,9 +25,15 @@ git clone https://github.com/AhmadzadehHazhir/test
 
 cd test 
 
-./vendor/bin/sail up
+./vendor/bin/sail up -d
 
 http://localhost/api
+
+mv .env.example .env
+
+change .env contents to your needs
+
+./vendor/bin/sail artisan migrate:fresh 
 
 ```
 
