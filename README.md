@@ -9,7 +9,7 @@ This is a shopping cart which each product can have multiple price, for example 
 <th>price</th>
 <tr><td>1</td><td>50$</td></tr>
 <tr>><td>3</td><td>130$</td></tr>
-<tr><td>8</td><td>400$</td></tr>
+<tr><td>8</td><td>375$</td></tr>
 </table>
 
 and extend this to have multiple products like A,B,C which each user can add to their cart.
