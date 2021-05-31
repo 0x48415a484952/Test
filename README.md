@@ -115,13 +115,6 @@ did not use any factories but we can do that also
 
 
 
-## Special Thanks 
-
-To those who work in Devolon and The team who came up with such a good test i had fun to be honest.
-I have to admit i learned a lot about different patterns during this test task , thanks to those who trusted me and gave me a chance to learn. implemented a CoR pattern on the special_price_rule which i think made it a little bit future proof as i mentioned before. i could have gone with something like a decorator but it did not seem to be very helpful. even strategy pattern could have been applied but wanted to keep it simple i used CoR because it can be extended easily in this situation also if one Calculator/Parser couldn't handle a specific syntax for our special_prices we can easily add another class to the chain this way we remain committed to the solid principles.
-
-
-
 ## Security Vulnerabilities
 
 You Probably wanna to go with php 8.0.5 because 8.0.3 has some security vulnaribilities 
